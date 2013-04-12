@@ -1,12 +1,17 @@
 import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -15,6 +20,7 @@ import org.junit.Test;
 public class MapperTest {
 
   @Test
+  @Ignore
   public void should_convert_a_person_entity() {
     // Given
     PersonEntity pierre = createPierreEntity();
@@ -52,6 +58,7 @@ public class MapperTest {
   }
 
   @Test
+  @Ignore
   public void should_convert_a_person_dto() {
     // Given
     PersonDto pierreDto = createPierreDto();

@@ -15,12 +15,14 @@ public class MasterMapperFactory<A, B> {
   private final Class<B>     dtoClass;
   private MapperFactory simpleMapperFactory;
   private ClassMapBuilder<A,B> classMapBuilder;
+  private MapperFacade facade ;
 
   public MasterMapperFactory(Class<A> entityClass, Class<B> dtoClass) {
     this.entityClass = entityClass;
     this.dtoClass = dtoClass;
     simpleMapperFactory = new DefaultMapperFactory.Builder().build();
     classMapBuilder = simpleMapperFactory.classMap(entityClass, dtoClass).byDefault();
+    facade = null;
   }
 
   public void addField(String entityFieldName, String dtoFieldName){
@@ -28,8 +30,11 @@ public class MasterMapperFactory<A, B> {
   }
 
   public MapperFacade getFacade(){
-    classMapBuilder.register();
-     return simpleMapperFactory.getMapperFacade();
+	 if(facade ==null){
+		 classMapBuilder.register();
+	     facade =  simpleMapperFactory.getMapperFacade();
+	 }
+    return facade;
   }
 
   public A convertDtoToEntity(Object dto){
