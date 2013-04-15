@@ -2,7 +2,7 @@ import static java.util.Arrays.asList;
 
 import java.util.ArrayList;
 
-import com.google.caliper.Runner;
+import com.google.caliper.Param;
 import com.google.caliper.SimpleBenchmark;
 
 /**
@@ -10,14 +10,11 @@ import com.google.caliper.SimpleBenchmark;
  */
 public class MapperBenchmark extends SimpleBenchmark {
 
+  @Param({"1","10","50","100"}) private int listSize;
   private ArrayList<PersonEntity>                           personEntities;
   private ArrayList<PersonDto>                              personDtos;
   private MasterMapperFactory<PersonEntity, PersonDto>      orikaFactory;
   private MasterMapperDozerFactory<PersonEntity, PersonDto> dozerFactory;
-
-  public static void main(String[] args) {
-    Runner.main(MapperBenchmark.class, args);
-  }
 
   @Override
   protected void setUp() throws Exception {
@@ -37,25 +34,25 @@ public class MapperBenchmark extends SimpleBenchmark {
 
   public void timeConvertEntityWithDozer(int reps) {
     for (int i = 0; i < reps; i++) {
-      dozerFactory.convertEntitiesToDtos(personEntities);
+      dozerFactory.convertEntitiesToDtos(personEntities.subList(0,listSize));
     }
   }
 
   public void timeConvertDtoWithDozer(int reps) {
     for (int i = 0; i < reps; i++) {
-      dozerFactory.convertDtosToEntities(personDtos);
+      dozerFactory.convertDtosToEntities(personDtos.subList(0,listSize));
     }
   }
 
   public void timeConvertEntityWithOrika(int reps) {
     for (int i = 0; i < reps; i++) {
-      orikaFactory.convertEntitiesToDtos(personEntities);
+      orikaFactory.convertEntitiesToDtos(personEntities.subList(0,listSize));
     }
   }
 
   public void timeConvertDtoWithOrika(int reps) {
     for (int i = 0; i < reps; i++) {
-      orikaFactory.convertDtosToEntities(personDtos);
+      orikaFactory.convertDtosToEntities(personDtos.subList(0,listSize));
     }
   }
 
